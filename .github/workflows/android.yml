@@ -1,4 +1,4 @@
-name: Docker build
+name: Android
 
 on:
   workflow_dispatch:

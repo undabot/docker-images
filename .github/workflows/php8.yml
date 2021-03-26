@@ -1,4 +1,4 @@
-name: Docker build
+name: PHP8
 
 on:
   workflow_dispatch:
