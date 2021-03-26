@@ -1,0 +1,22 @@
+name: Docker build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: DockerHub login
+        env:
+          DOCKER_USER: ${{secrets.DOCKERHUB_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: docker build android base
+        run: |
+          docker build -f ./android/Dockerfile -t undabot/android_base:latest .
+      - name: Push image to DockerHub
+        run: |
+          docker push undabot/android_base:latest
