@@ -1,0 +1,19 @@
+name: Docker build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v2
+      - name: docker build php7 base
+        run: |
+          docker build --build-arg PHP_VERSION=7.4.3 -f ./php/Dockerfile -t php_base:7 .
+      - name: docker build php8 base
+        run: |
+          docker build --build-arg PHP_VERSION=8.0.3 -f ./php/Dockerfile -t php_base:8 .
+      - name: docker build android base
+        run: |
+          docker build -f ./android/Dockerfile -t android_base:latest .
