@@ -13,7 +13,7 @@ RUN adduser -S app -D -u $USER_ID -G app
 ENV RUNTIME_DEPS="icu-dev bash nano vim git libzip-dev zip unzip libpng-dev"
 RUN apk add --update --no-cache $RUNTIME_DEPS
 
-RUN docker-php-ext-install intl pdo pdo_mysql zip gd
+RUN docker-php-ext-install intl pdo pdo_mysql zip gd opcache pcntl
 
 # Install composer
 RUN apk add --update --no-cache composer
