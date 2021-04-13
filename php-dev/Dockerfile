@@ -15,8 +15,12 @@ RUN apk add --update --no-cache $RUNTIME_DEPS
 
 RUN docker-php-ext-install intl pdo pdo_mysql zip gd opcache pcntl
 
+# Install xdebug
+ENV XDEBUG_DEPS="autoconf g++ make"
+RUN apk add --update --no-cache $XDEBUG_DEPS
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
+RUN apk del --purge autoconf g++ make
 
 # Install composer
 RUN apk add --update --no-cache composer
