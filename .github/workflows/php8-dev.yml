@@ -1,0 +1,22 @@
+name: PHP8
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_php8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: DockerHub login
+        env:
+          DOCKER_USER: ${{secrets.DOCKERHUB_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name:  docker build php8 dev
+        run: |
+          docker build --build-arg PHP_VERSION=8.0.3 -f ./php-dev/Dockerfile -t undabot/php_dev:8 .
+      - name: Push image to DockerHub
+        run: |
+          docker push undabot/php_dev:8

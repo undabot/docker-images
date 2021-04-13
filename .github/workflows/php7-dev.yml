@@ -1,0 +1,22 @@
+name: PHP7
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_php7:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: DockerHub login
+        env:
+          DOCKER_USER: ${{secrets.DOCKERHUB_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKERHUB_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      - name: docker build php7 dev
+        run: |
+          docker build --build-arg PHP_VERSION=7.4.11 -f ./php-dev/Dockerfile -t undabot/php_dev:7 .
+      - name: Push image to DockerHub
+        run: |
+          docker push undabot/php_dev:7
