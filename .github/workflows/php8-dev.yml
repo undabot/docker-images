@@ -1,4 +1,4 @@
-name: PHP8
+name: PHP8-dev
 
 on:
   workflow_dispatch:
