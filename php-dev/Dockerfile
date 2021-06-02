@@ -6,8 +6,7 @@ ARG USER_ID=1000
 ARG GROUP_ID=1000
 
 # Create app user and group with UID same as provided argument to avoid permission issues and conflicts
-RUN addgroup -g "$GROUP_ID" -S app
-RUN adduser -S app -D -u $USER_ID -G app
+RUN addgroup -g "$GROUP_ID" -S app && adduser -S app -D -u $USER_ID -G app
 
 # Install dependencies and utils
 ENV RUNTIME_DEPS="icu-dev bash nano vim git libzip-dev zip unzip libpng-dev"
@@ -22,9 +21,10 @@ RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 RUN apk del --purge autoconf g++ make
 
+ADD ./php-dev/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
 # Install composer
-RUN apk add --update --no-cache composer
-RUN composer self-update
+RUN apk add --update --no-cache composer && composer self-update
 
 # create app directory
 RUN mkdir -p /opt/app && chown app /opt/app
