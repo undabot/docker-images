@@ -19,11 +19,12 @@ ENV XDEBUG_DEPS="autoconf g++ make"
 RUN apk add --update --no-cache $XDEBUG_DEPS
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
-RUN apk del --purge autoconf g++ make
 
 # Install php-redis
 RUN pecl install -o -f redis 
 RUN docker-php-ext-enable redis
+
+RUN apk del --purge autoconf g++ make
 
 ADD ./php-dev/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
