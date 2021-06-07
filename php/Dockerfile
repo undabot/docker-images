@@ -15,9 +15,13 @@ RUN apk add --update --no-cache $RUNTIME_DEPS
 
 RUN docker-php-ext-install intl pdo pdo_mysql zip gd opcache pcntl
 
-# Install php-redis
+# Install xdebug
+ENV REDIS_DEPS="autoconf g++ make"
+RUN apk add --update --no-cache $REDIS_DEPS
 RUN pecl install -o -f redis 
 RUN docker-php-ext-enable redis
+
+RUN apk del --purge autoconf g++ make
 
 # Install composer
 RUN apk add --update --no-cache composer
