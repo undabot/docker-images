@@ -15,6 +15,10 @@ RUN apk add --update --no-cache $RUNTIME_DEPS
 
 RUN docker-php-ext-install intl pdo pdo_mysql zip gd opcache pcntl
 
+# Install php-redis
+RUN pecl install -o -f redis 
+RUN docker-php-ext-enable redis
+
 # Install composer
 RUN apk add --update --no-cache composer
 RUN composer self-update
