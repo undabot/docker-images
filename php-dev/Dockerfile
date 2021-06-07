@@ -21,6 +21,10 @@ RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug
 RUN apk del --purge autoconf g++ make
 
+# Install php-redis
+RUN pecl install -o -f redis 
+RUN docker-php-ext-enable redis
+
 ADD ./php-dev/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # Install composer
